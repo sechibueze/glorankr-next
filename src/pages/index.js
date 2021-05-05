@@ -1,19 +1,65 @@
 import { useState } from "react";
-import SearchIcon from "@material-ui/icons/Search";
+import Link from "next/link";
+import {
+  Search as SearchIcon,
+  KeyboardArrowDown,
+  KeyboardArrowUp,
+  KeyboardArrowRightOutlined,
+} from "@material-ui/icons";
 import Head from "../components/Head";
 import styles from "../styles/Home.module.css";
 
 import { countries } from "../_data/countries";
+const SortIndicator = (direction) => {
+  if (direction === "ASC") {
+    return <KeyboardArrowUp color="inherit" />;
+  } else {
+    return <KeyboardArrowDown color="inherit" />;
+  }
+};
 
+const DefaultSortIndicator = () => (
+  <KeyboardArrowRightOutlined color="inherit" />
+);
+const orderedCountries = (listOfCountries, field, direction) => {
+  if (direction.toLowerCase() === "asc") {
+    return [...listOfCountries].sort((a, b) => (a[field] > b[field] ? 1 : -1));
+  }
+
+  if (direction.toLowerCase() === "desc") {
+    return [...listOfCountries].sort((a, b) => (a[field] > a[field] ? -1 : 1));
+  }
+
+  return listOfCountries;
+};
 export default function Home({ countries }) {
   console.log("countries data", countries[0]);
   const [keyword, setKeyword] = useState("");
+  const [direction, setDirection] = useState("ASC");
+  const [field, setField] = useState("");
   const handleSearch = (e) => {
     e.preventDefault();
     setKeyword(e.target.value.toLowerCase());
   };
 
-  const filteredCountries = countries.filter(
+  const changeDirection = () => {
+    if (direction === "ASC") {
+      setDirection("DESC");
+    } else {
+      setDirection("ASC");
+    }
+  };
+
+  const setFieldAndDirection = (field) => {
+    changeDirection();
+    setField(field);
+  };
+
+  const filteredCountries = orderedCountries(
+    countries,
+    field,
+    direction
+  ).filter(
     (country) =>
       country.name.toLowerCase().includes(keyword) ||
       country.region.toLowerCase().includes(keyword) ||
@@ -21,6 +67,7 @@ export default function Home({ countries }) {
       country.capital.toLowerCase().includes(keyword) ||
       country.demonym.toLowerCase().includes(keyword)
   );
+
   return (
     <>
       <Head />
@@ -43,56 +90,63 @@ export default function Home({ countries }) {
         <div className={styles.data_table}>
           <div className={styles.data_heading}>
             <span className={styles.heading_flag}> </span>
-            <span className={styles.heading_name}> Name </span>
-            <span className={styles.heading_population}> Population </span>
-            <span className={styles.heading_area}> Area </span>
-            <span className={styles.heading_gini}> Gini </span>
+            <span className={styles.heading_name}>
+              {" "}
+              Name
+              <span onClick={() => setFieldAndDirection("name")}>
+                {field === "name"
+                  ? SortIndicator(direction)
+                  : DefaultSortIndicator()}{" "}
+              </span>
+            </span>
+            <span className={styles.heading_population}>
+              {" "}
+              Population{" "}
+              <span onClick={() => setFieldAndDirection("population")}>
+                {field === "population"
+                  ? SortIndicator(direction)
+                  : DefaultSortIndicator()}{" "}
+              </span>
+            </span>
+            <span className={styles.heading_area}>
+              {" "}
+              Area{" "}
+              <span onClick={() => setFieldAndDirection("area")}>
+                {field === "area"
+                  ? SortIndicator(direction)
+                  : DefaultSortIndicator()}{" "}
+              </span>
+            </span>
+            <span className={styles.heading_gini}>
+              {" "}
+              Gini{" "}
+              <span onClick={() => setFieldAndDirection("gini")}>
+                {field === "gini"
+                  ? SortIndicator(direction)
+                  : DefaultSortIndicator()}{" "}
+              </span>{" "}
+            </span>
           </div>
           <div className={styles.data_wrapper}>
             {filteredCountries.map((country) => (
-              <div class={styles.data_row} key={country.name}>
-                <span className={styles.flag}>
-                  {" "}
-                  <img src={country.flag} alt={`${country.name}'s flag`} />{" "}
-                </span>
-                <span> {country.name} </span>
-                <span> {country.population} </span>
-                <span> {country.area} </span>
-                <span> {country.gini} </span>
-              </div>
+              <Link href={`/${country.alpha3Code}`}>
+                <div class={styles.data_row} key={country.name}>
+                  <span className={styles.flag}>
+                    {" "}
+                    <img
+                      src={country.flag}
+                      alt={`${country.name}'s flag`}
+                    />{" "}
+                  </span>
+                  <span> {country.name} </span>
+                  <span> {country.population} </span>
+                  <span> {country.area} </span>
+                  <span> {country.gini} </span>
+                </div>
+              </Link>
             ))}
           </div>
         </div>
-        {/* <table className={styles.countries_table}> 
-          <tr className={styles.countries_table_heading}>
-            <th> Flag </th>
-            <th> Name </th>
-            <th> Population </th>
-            <th>
-              {" "}
-              Area(km <sup>2</sup>)
-            </th>
-            <th> Ginit </th>
-          </tr>
-          {countries.map((country) => {
-            const { name, flag, capital, area, gini, population } = country;
-            return (
-              <tr className={styles.country_row} key={name}>
-                <td>
-                  <img
-                    src={flag}
-                    className={styles.country_flag}
-                    alt="country flag"
-                  />
-                </td>
-                <td> {name} </td>
-                <td> {population} </td>
-                <td> {area} </td>
-                <td> {gini} </td>
-              </tr>
-            );
-          })}
-        </table> */}
       </div>
     </>
   );
