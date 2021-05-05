@@ -28,6 +28,13 @@ a {
   color: inherit;
 }
 
+table,
+th,
+td {
+  border: none;
+  vertical-align: center;
+}
+
 .page-container {
   background-color: var(--light-background-color);
 
@@ -55,12 +62,11 @@ a {
   color: var(--primary-text-color);
   padding: 0.25rem;
 }
-.logo-text{
+.logo-text {
   color: var(--primary-text-color);
 }
 .theme-switcher {
   padding-left: 1.8rem;
-    
 }
 .footer {
   display: flex;
