@@ -1,25 +1,40 @@
+import { useState } from "react";
 import SearchIcon from "@material-ui/icons/Search";
 import Head from "../components/Head";
-import Image from "next/image";
 import styles from "../styles/Home.module.css";
 
 import { countries } from "../_data/countries";
 
 export default function Home({ countries }) {
   console.log("countries data", countries[0]);
+  const [keyword, setKeyword] = useState("");
+  const handleSearch = (e) => {
+    e.preventDefault();
+    setKeyword(e.target.value.toLowerCase());
+  };
+
+  const filteredCountries = countries.filter(
+    (country) =>
+      country.name.toLowerCase().includes(keyword) ||
+      country.region.toLowerCase().includes(keyword) ||
+      country.subregion.toLowerCase().includes(keyword) ||
+      country.capital.toLowerCase().includes(keyword) ||
+      country.demonym.toLowerCase().includes(keyword)
+  );
   return (
     <>
       <Head />
       <div className={styles.container}>
         <div className={styles.country_list_info}>
           <p className={styles.country_count}>
-            Found {countries.length} countries{" "}
+            Found {filteredCountries.length} countries{" "}
           </p>
           <div className={styles.search_wrapper}>
             <span className={styles.search_icon}>
               <SearchIcon color="inherit" />
             </span>
             <input
+              onChange={handleSearch}
               placeholder="Filter by name, region & sub-region..."
               className={styles.search_input}
             />
@@ -34,7 +49,7 @@ export default function Home({ countries }) {
             <span className={styles.heading_gini}> Gini </span>
           </div>
           <div className={styles.data_wrapper}>
-            {countries.map((country) => (
+            {filteredCountries.map((country) => (
               <div class={styles.data_row} key={country.name}>
                 <span className={styles.flag}>
                   {" "}
