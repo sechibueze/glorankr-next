@@ -47,8 +47,6 @@
 .data_heading {
   display: flex;
   flex-direction: row;
-  /* justify-content: space-around;
-  align-items: center; */
 }
 
 .data_heading span {
@@ -61,6 +59,14 @@
   display: flex;
   justify-content: flex-start;
   align-items: center;
+}
+.heading_population {
+  color: var(--primary-text-color);
+}
+@media screen and (max-width: 480px) {
+  .heading_population {
+    display: none;
+  }
 }
 .heading_flag {
   flex: 1;

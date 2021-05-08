@@ -14,8 +14,13 @@ const SEO = ({ title }) => {
         rel="stylesheet"
         href="https://fonts.googleapis.com/icon?family=Material+Icons"
       />
+      <link rel="preconnect" href="https://fonts.gstatic.com" />
+      <link
+        href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;500;600&display=swap"
+        rel="stylesheet"
+      />
 
-      <link rel="icon" href="/favicon.ico" />
+      <link rel="icon" href="/glorankr_icon.PNG" />
     </Head>
   );
 };

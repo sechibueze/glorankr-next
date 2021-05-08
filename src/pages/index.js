@@ -9,7 +9,7 @@ import {
 import Head from "../components/Head";
 import styles from "../styles/Home.module.css";
 
-import { countries } from "../_data/countries";
+// import { countries } from "../_data/countries";
 const SortIndicator = (direction) => {
   if (direction === "ASC") {
     return <KeyboardArrowUp color="inherit" />;
@@ -27,7 +27,7 @@ const orderedCountries = (listOfCountries, field, direction) => {
   }
 
   if (direction.toLowerCase() === "desc") {
-    return [...listOfCountries].sort((a, b) => (a[field] > a[field] ? -1 : 1));
+    return [...listOfCountries].sort((a, b) => (a[field] > b[field] ? 1 : -1));
   }
 
   return listOfCountries;
@@ -129,7 +129,7 @@ export default function Home({ countries }) {
           </div>
           <div className={styles.data_wrapper}>
             {filteredCountries.map((country) => (
-              <Link href={`/${country.alpha3Code}`}>
+              <Link href={`/${country.alpha3Code}`} key={country.name}>
                 <div class={styles.data_row} key={country.name}>
                   <span className={styles.flag}>
                     {" "}
@@ -153,10 +153,10 @@ export default function Home({ countries }) {
 }
 
 export const getStaticProps = async () => {
-  // const url = `https://restcountries.eu/rest/v2/all`;
-  // const response = await fetch(url);
-  // const countries = await response.json();
-  // console.log("countries data ", countries[0]);
+  const url = `https://restcountries.eu/rest/v2/all`;
+  const response = await fetch(url);
+  const countries = await response.json();
+  console.log("countries data ", countries[0]);
 
   return {
     props: {

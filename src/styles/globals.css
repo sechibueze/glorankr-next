@@ -1,3 +1,5 @@
+/* @import url("https://fonts.googleapis.com/css2?family=Roboto:wght@100;300;500;900&display=swap"); */
+/* @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;500;600&display=swap"); */
 :root {
   --primary-text-color: #124a63;
   --secondary-text-color: #b3c5cd;
@@ -8,7 +10,7 @@
   --dark-background-color: #eef3f6;
   --light-background-color: white;
 
-  --font-family: "Poppins", Roboto, sans-serif;
+  --font-family: "Poppins", sans-serif;
   --box-shadow: 0px 2px 8px rgba(0, 0, 0, 0.05);
 }
 
@@ -26,6 +28,7 @@ a {
   list-style: none;
   outline: none;
   color: inherit;
+  font-family: var(--font-family);
 }
 
 table,
@@ -54,9 +57,13 @@ td {
   margin-bottom: 0.75rem;
   color: var(--primary-text-color);
 }
-
+.logo-link {
+  display: flex;
+  padding-left: 1rem;
+}
 .logo-wrapper {
   padding-right: 0.25rem;
+  cursor: pointer;
 }
 .logo-icon {
   color: var(--primary-text-color);
@@ -66,7 +73,11 @@ td {
   color: var(--primary-text-color);
 }
 .theme-switcher {
-  padding-left: 1.8rem;
+  padding: 1.8rem;
+
+  flex: 1;
+  display: flex;
+  justify-content: flex-end;
 }
 .footer {
   display: flex;
