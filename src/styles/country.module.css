@@ -67,6 +67,7 @@
 
 .country_details h3 {
   text-align: left;
+  color: var(--primary-text-color);
 }
 
 .details_row {

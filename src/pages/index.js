@@ -21,7 +21,7 @@ const SortIndicator = (direction) => {
 const DefaultSortIndicator = () => (
   <KeyboardArrowRightOutlined color="inherit" />
 );
-const orderedCountries = (listOfCountries, field, direction) => {
+const orderCountries = (listOfCountries, field, direction) => {
   if (direction.toLowerCase() === "asc") {
     return [...listOfCountries].sort((a, b) => (a[field] > b[field] ? 1 : -1));
   }
@@ -33,7 +33,7 @@ const orderedCountries = (listOfCountries, field, direction) => {
   return listOfCountries;
 };
 export default function Home({ countries }) {
-  console.log("countries data", countries[0]);
+  // console.log("countries data", countries[0]);
   const [keyword, setKeyword] = useState("");
   const [direction, setDirection] = useState("ASC");
   const [field, setField] = useState("");
@@ -55,11 +55,7 @@ export default function Home({ countries }) {
     setField(field);
   };
 
-  const filteredCountries = orderedCountries(
-    countries,
-    field,
-    direction
-  ).filter(
+  const filteredCountries = countries.filter(
     (country) =>
       country.name.toLowerCase().includes(keyword) ||
       country.region.toLowerCase().includes(keyword) ||
@@ -67,6 +63,8 @@ export default function Home({ countries }) {
       country.capital.toLowerCase().includes(keyword) ||
       country.demonym.toLowerCase().includes(keyword)
   );
+
+  const orderedCountries = orderCountries(filteredCountries, field, direction);
 
   return (
     <>
@@ -128,7 +126,7 @@ export default function Home({ countries }) {
             </span>
           </div>
           <div className={styles.data_wrapper}>
-            {filteredCountries.map((country) => (
+            {orderedCountries.map((country) => (
               <Link href={`/${country.alpha3Code}`} key={country.name}>
                 <div class={styles.data_row} key={country.name}>
                   <span className={styles.flag}>
@@ -139,9 +137,12 @@ export default function Home({ countries }) {
                     />{" "}
                   </span>
                   <span> {country.name} </span>
-                  <span> {country.population} </span>
-                  <span> {country.area} </span>
-                  <span> {country.gini} </span>
+                  <span className={styles.pop_data}>
+                    {" "}
+                    {country.population}{" "}
+                  </span>
+                  <span className={styles.area_data}> {country.area} </span>
+                  <span className={styles.gini_data}> {country.gini} </span>
                 </div>
               </Link>
             ))}

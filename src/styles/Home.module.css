@@ -34,6 +34,7 @@
 .search_input {
   background-color: transparent;
   padding: 0.25rem 0.5rem;
+  width: 100%;
 }
 
 .search_icon {
@@ -66,7 +67,10 @@
   color: var(--primary-text-color);
 }
 @media screen and (max-width: 480px) {
-  .heading_population {
+  .data_heading .heading_area,
+  .data_heading .heading_gini,
+  .area_data,
+  .gini_data {
     display: none;
   }
 }
@@ -93,6 +97,8 @@
 }
 .flag {
   flex: 1;
+
+  text-align: center;
 }
 .flag img {
   width: 2.5rem;
