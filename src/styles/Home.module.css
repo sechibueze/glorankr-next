@@ -14,7 +14,7 @@
   margin-bottom: 1rem;
 }
 .country_count {
-  color: var(--secondary-text-color, red);
+  color: var(--secondary-text-color);
   font-weight: bold;
   font-size: 1.2rem;
 }
@@ -53,6 +53,8 @@
   flex: 4;
   padding: 0.5rem 0.25rem;
 
+  color: var(--primary-text-color);
+
   font-weight: bold;
   font-size: 1.1rem;
 
@@ -86,7 +88,7 @@
 }
 .data_row span {
   flex: 4;
-
+  color: var(--primary-text-color);
   align-self: center;
 }
 .flag {

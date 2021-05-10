@@ -31,6 +31,8 @@
 .country_id {
   margin: 0.5rem 0rem;
   text-align: center;
+
+  color: var(--primary-text-color);
 }
 
 .country_stats {
@@ -88,6 +90,7 @@
   margin: 0.85rem auto;
   border-radius: 0.25rem;
   background-color: var(--light-background-color);
+  color: var(--primary-text-color);
   padding: 1rem;
 }
 .border_wrapper h3 {
